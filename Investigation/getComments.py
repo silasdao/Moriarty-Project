@@ -18,9 +18,9 @@ def getComments_(phone_number):
                 comment.append(comment_)
             except:
                 pass
-        if comment==[]:
+        if not comment:
             comment_="No comment for this number"
-            comment.append(comment_) 
+            comment.append(comment_)
     except:
         comment_="No comment for this number"
         comment.append(comment_) 

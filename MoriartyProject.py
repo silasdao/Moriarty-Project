@@ -138,65 +138,62 @@ def index():
         command=request.form["in"]
         if command=="help":
             return render_template("help.html")
-        elif command[0:15]=="add PhoneNumber":
-          
+        elif command[:15] == "add PhoneNumber":
+
             phone_number=str("+"+re.search("\d+",command).group(0))
             return render_template("phoneNumberSuccess.html",phone_number=phone_number)
-        elif command[0:21]=="add feature FindOwner":
+        elif command[:21] == "add feature FindOwner":
             try:
-                if email!="" or password!="":
-                    find_owner="Added"
-                    return render_template("findOwnerSuccess.html",phone_number=phone_number)
-                else:
-                    
+                if email == "" and password == "":
                     return redirect(url_for("microsoftMail"))
+                find_owner="Added"
+                return render_template("findOwnerSuccess.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:23]=="add feature SocialMedia":
+        elif command[:23] == "add feature SocialMedia":
             social_media="Added"
             try:
                 return render_template("socialMediaSuccess.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:20]=="add feature GetLinks":
+        elif command[:20] == "add feature GetLinks":
             get_links="Added"
             try:
                 return render_template("GetLinksSuccess.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:20]=="add feature SpamRisk":
+        elif command[:20] == "add feature SpamRisk":
             spam_risk="Added"
             try:
                 return render_template("SpamRiskSuccess.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:23]=="add feature GetComments":
+        elif command[:23] == "add feature GetComments":
             get_comments="Added"
             try:
                 return render_template("GetCommentsSuccess.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:12]=="show options":
+        elif command[:12] == "show options":
             try:
                 return render_template("showoptions.html",phone_number=phone_number,social_media=social_media,get_links=get_links,spam_risk=spam_risk,find_owner=find_owner,get_comments=get_comments)
             except:
                 phone_number="Not Provided"
                 return render_template("showoptions.html",phone_number=phone_number,social_media=social_media,get_links=get_links,spam_risk=spam_risk,find_owner=find_owner,get_comments=get_comments)
-        elif command[0:20]=="add feature *":
+        elif command[:20] == "add feature *":
             runall="Added"
             social_media="Added"
             spam_risk="Added"
             get_comments="Added"
             get_links="Added"
             try:
-                if email!="" or password!="":
-                    find_owner="Added"
-                    return render_template("featureAll.html",phone_number=phone_number)
-                else:
+                if email == "" and password == "":
                     return redirect(url_for("microsoftMail"))
+                find_owner="Added"
+                return render_template("featureAll.html",phone_number=phone_number)
             except:
                 return render_template("failed.html")
-        elif command[0:3]=="run":
+        elif command[:3] == "run":
             global country,operator,timeZone,errNumber,currentTime,comments,comments2
             Investigation.general.location(phone_number)
             country=Investigation.general.returnCountry()
@@ -204,12 +201,11 @@ def index():
             timeZone=Investigation.general.returnTimeZone()
             errNumber=Investigation.general.return_errNumber_()
             currentTime=Investigation.general.returnCurrentTime()
-            if errNumber!="False":
-                threading.Thread(target=runScripts).start()  
-                time.sleep(2) 
-                return redirect(url_for("investigation"))
-            else:
+            if errNumber == "False":
                 return redirect(url_for("investigationErr"))
+            threading.Thread(target=runScripts).start()
+            time.sleep(2)
+            return redirect(url_for("investigation"))
         else:
             return render_template("unkownCommand.html")
 def featureOnProgress():
