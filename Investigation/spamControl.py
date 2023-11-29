@@ -17,10 +17,7 @@ def spamMain(phone_number):
     if situationSpam!=[]:situationSpam=situationSpam[0].text
     else:situationSpam="User reports for the phone number are not (no longer) available."
 
-    if explanation!=[]:explanation=explanation[0].text
-    else:explanation="No Explanation"
-
-    if numberType!=[]:numberType=numberType[0].text
-    else:numberType="No numberType"
+    explanation = explanation[0].text if explanation!=[] else "No Explanation"
+    numberType = numberType[0].text if numberType!=[] else "No numberType"
 
 
